@@ -1,0 +1,62 @@
+﻿@page "/"
+
+@using Syncfusion.EJ2.Blazor.Buttons
+@using Syncfusion.EJ2.Blazor.Grids
+
+<EjsButton OnClick="ExcelExport" Content="Excel Export"></EjsButton>
+<EjsButton OnClick="PdfExport" Content="Pdf Export"></EjsButton>
+<EjsGrid @ref="DefaultGrid" DataSource="@Orders" AllowGrouping="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true">
+    <GridGroupSettings Columns="@(new string[] {"CustomerID"})">
+    </GridGroupSettings>
+    <GridColumns>
+        <GridColumn Field=@nameof(Order.OrderID) HeaderText="Order ID" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+        <GridColumn Field=@nameof(Order.CustomerID) HeaderText="Customer Name" Width="150"></GridColumn>
+        <GridColumn Field=@nameof(Order.OrderDate) HeaderText=" Order Date" Format="yMd" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="130"></GridColumn>
+        <GridColumn Field=@nameof(Order.Freight) HeaderText="Freight" Visible="false" Format="C2" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+    </GridColumns>
+</EjsGrid>
+
+@code{
+    private EjsGrid<Order> DefaultGrid;
+
+    public List<Order> Orders { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Orders = Enumerable.Range(1, 75).Select(x => new Order()
+        {
+            OrderID = 1000 + x,
+            CustomerID = (new string[] { "ALFKI", "ANANTR", "ANTON", "BLONP", "BOLID" })[new Random().Next(5)],
+            Freight = 2.1 * x,
+            OrderDate = DateTime.Now.AddDays(-x),
+        }).ToList();
+    }
+
+    public class Order
+    {
+        public int? OrderID { get; set; }
+        public string CustomerID { get; set; }
+        public DateTime? OrderDate { get; set; }
+        public double? Freight { get; set; }
+    }
+
+    public void ExcelExport()
+    {
+        ExcelExportProperties ExcelProperties = new ExcelExportProperties();
+        ExcelProperties.FileName = "new.xlsx";      
+        ExcelProperties.DataSource = Orders.Where(x => x.CustomerID == "ALFKI").ToList();
+        this.DefaultGrid.ClearGrouping();
+        this.DefaultGrid.ExcelExport(ExcelProperties);
+        this.DefaultGrid.GroupColumn("CustomerID");
+    }
+    public async void PdfExport()
+    {
+        PdfExportProperties ExportProperties = new PdfExportProperties();
+        ExportProperties.FileName = "test.pdf";
+        ExportProperties.DataSource = Orders.Where(x => x.CustomerID == "ALFKI").ToList();
+        this.DefaultGrid.ClearGrouping();
+        this.DefaultGrid.PdfExport(ExportProperties);
+        this.DefaultGrid.GroupColumn("CustomerID");
+    }
+
+}
