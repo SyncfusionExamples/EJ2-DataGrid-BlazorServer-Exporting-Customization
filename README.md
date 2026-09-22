@@ -2,7 +2,7 @@
 
 ## Overview
 
-This sample demonstrates export customization scenarios in the Syncfusion Blazor DataGrid for Blazor Server applications. The implementation focuses on modifying export behavior beyond the default Grid export workflow, including changing exported file names, exporting data without grouping information, and applying external filter criteria only during export operations. These customization techniques are useful when exported documents must follow business-specific rules that differ from the data currently displayed in the Grid. The sample provides a reference implementation for tailoring DataGrid export behavior while maintaining a standard user experience for end users.
+This sample demonstrates export customization scenarios in the Syncfusion [Blazor DataGrid](https://www.syncfusion.com/blazor-components/blazor-datagrid) for Blazor Server applications. The implementation focuses on modifying export behavior beyond the default Grid export workflow, including changing exported file names, exporting data without grouping information, and applying external filter criteria only during export operations. These customization techniques are useful when exported documents must follow business-specific rules that differ from the data currently displayed in the Grid. The sample provides a reference implementation for tailoring DataGrid export behavior while maintaining a standard user experience for end users.
 
 ## Key Features
 
